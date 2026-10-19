@@ -132,6 +132,37 @@ func TestBlend1D(t *testing.T) {
 			},
 			expected: []color.Color{},
 		},
+		{
+			name:  "2-steps-3-stops-leading-nil",
+			steps: 2,
+			stops: []color.Color{
+				nil,
+				color.RGBA{R: 255, G: 0, B: 0, A: 255},
+				color.RGBA{R: 0, G: 255, B: 0, A: 255},
+			},
+			expected: []color.Color{
+				&color.RGBA{R: 255, G: 0, B: 0, A: 255},
+				&color.RGBA{R: 0, G: 255, B: 0, A: 255},
+			},
+		},
+		{
+			name:  "2-steps-2-stops-one-nil",
+			steps: 2,
+			stops: []color.Color{
+				color.RGBA{R: 255, G: 0, B: 0, A: 255},
+				nil,
+			},
+			expected: []color.Color{
+				&color.RGBA{R: 255, G: 0, B: 0, A: 255},
+				&color.RGBA{R: 255, G: 0, B: 0, A: 255},
+			},
+		},
+		{
+			name:     "1-step-1-nil-stop",
+			steps:    1,
+			stops:    []color.Color{nil},
+			expected: []color.Color{},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
