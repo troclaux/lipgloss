@@ -181,6 +181,19 @@ func TestBlend1D(t *testing.T) {
 	}
 }
 
+func TestBlend1DDoesNotAliasStops(t *testing.T) {
+	red := color.RGBA{R: 255, G: 0, B: 0, A: 255}
+	green := color.RGBA{R: 0, G: 255, B: 0, A: 255}
+	stops := []color.Color{red, green}
+
+	got := Blend1D(2, stops...)
+	got[0] = color.RGBA{R: 1, G: 2, B: 3, A: 255}
+
+	if stops[0] != red {
+		t.Errorf("modifying result changed caller's stops: got %v, want %v", stops[0], red)
+	}
+}
+
 func TestBlend2D(t *testing.T) {
 	tests := []struct {
 		name           string

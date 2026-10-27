@@ -30,7 +30,7 @@ func Blend1D(steps int, stops ...color.Color) []color.Color {
 	}
 
 	if steps <= len(stops) {
-		return stops[:steps]
+		return slices.Clone(stops[:steps])
 	}
 
 	// If they only provided one valid color (or some nil colors), we will just return
